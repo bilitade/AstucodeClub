@@ -1,8 +1,24 @@
 <?php 
+ require('../../Model/members.php');
+ $member= new member();
 
-  include_once('../../Model/Database.php')
 
-?>
+
+
+   ?>
+
+   <?php  if (isset($_REQUEST['create_account'])) {
+
+$member->CreateAcccount($_REQUEST);
+
+
+
+  }
+  
+ ?>
+ 
+
+
 
 
 <!DOCTYPE html>
@@ -49,18 +65,47 @@
     <div class="row" style="margin: 2%">
 
     <?php if (isset( $_REQUEST["info"])):?>
-      <div class="col">
-        <div class="alert alert-success" role="alert">
-          <span><strong>Successfully Registered !</strong>.</span>
+
+        <?php if($_REQUEST["info"]=="notmatch"): ?>
+          <div class="col">
+        <div class="alert alert-danger" role="alert">
+          <span><strong>Password Doesnt match!</strong>.</span>
         </div>
       </div>
+        <?php endif?>
+
+        <?php if($_REQUEST["info"]=="emailtaken"): ?>
+          <div class="col">
+        <div class="alert alert-danger" role="alert">
+          <span><strong>email AlreadyTaken!</strong>.</span>
+        </div>
+      </div>
+        <?php endif?>
+
+
+
+        <?php if($_REQUEST["info"]=="success"): ?>
+          <div class="col">
+        <div class="alert alert-success" role="alert">
+          <span><strong>Successfully registered, Go to homepage to sign in</strong>.</span>
+        </div>
+      </div>
+
+
+        <?php endif?>
+
+
+
+
+
+      
     <?php endif?>
     
     </div>
     <div class="container-fluid" style="margin-top: 2%">
       <div class="card">
         <div class="card-body">
-          <form  method="GET">
+          <form  method="POST">
             <h1 class="text-center" style="font-size: 35px">Member Signup</h1>
             <div class="form-row">
               <div
@@ -69,15 +114,15 @@
               >
                 <div class="form-group">
                   <label>First Name</label
-                  ><input class="form-control" name="firstName" type="text" />
+                  ><input class="form-control" name="firstName" required type="text" />
                 </div>
                 <div class="form-group">
                   <label>Last Name</label
-                  ><input class="form-control" name="lastName" type="text" />
+                  ><input class="form-control" name="lastName" required type="text" />
                 </div>
                 <div class="form-group">
                   <label>Email</label>
-                  <input class="form-control"  name="email" type="text" />
+                  <input class="form-control"  name="email" required type="email" />
                 </div>
                 <div class="form-group">
                   <label>Age</label
@@ -121,30 +166,30 @@
               >
                 <div class="form-group">
                   <label>Password</label
-                  ><input class="form-control" type="password" />
+                  ><input name="pwd" class="form-control" type="password" required />
                 </div>
                 <div class="form-group">
                   <label>Confirm&nbsp; Password</label
-                  ><input class="form-control" type="password" />
+                  ><input  name="cpwd"class="form-control" type="password" required />
                 </div>
                 <div class="form-group">
                   <label>Dept</label
-                  ><select class="form-control">
-                    <option value="undefined" selected="">CSE</option>
+                  ><select  name="dept"class="form-control">
+                    <option value="CSE" selected="">CSE</option>
                     <option value="ECE">ECE</option>
                     <option value="PCE">PCE</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label>Academic Year</label
-                  ><select class="form-control">
+                  ><select  name="academic" class="form-control">
                     <option value="2" selected="">2ndYear</option>
                     <option value="3">3rdYear</option>
                     <option value="4">4thYear</option>
                     <option value="5">5thYear</option>
                   </select>
                 </div>
-                <button class="btn btn-primary" type="button">Submit</button>
+                <button class="btn btn-primary"  type="submit" name="create_account">Submit</button>
               </div>
             </div>
           </form>

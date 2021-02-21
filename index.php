@@ -1,11 +1,19 @@
 <?php 
-
+  session_start();
   include('../club/Model/Database.php');
+  include('../club/Model/admin.php');
  $dbObj= new Database();
  $dbObj->Connect();
  $announces=$dbObj->fetchannounce();
  $events =$dbObj->fetchEvent();
 
+  if (isset($_REQUEST['admin_login'])){
+
+   $adminObj= new Admin();
+   $adminObj->adminLogin($_REQUEST);
+
+
+  }
 
 ?>
 
@@ -143,7 +151,7 @@
                   <tbody>
                     <?php  foreach($events as $event): ?>
                     <tr>
-                      <td><?php echo $event["event-title"] ?></td>
+                      <td><?php echo $event["title"] ?></td>
                       <td><?php echo $event["begin_at"]?></td>
                       <td><?php echo $event["end_at"]?></td>
 
@@ -198,15 +206,15 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form method="GET">
               <div class="form-group">
-                <label>Email</label><input class="form-control" type="text" />
+                <label>Email</label><input name="email" class="form-control" type="email" />
               </div>
               <div class="form-group">
                 <label>Password</label
-                ><input class="form-control" type="password" />
+                ><input class="form-control" name="password" type="password" />
               </div>
-              <button class="btn btn-primary" type="button">Login</button>
+              <button class="btn btn-primary" type="submit" name="admin_login">Login</button>
             </form>
           </div>
           <div class="modal-footer"></div>
