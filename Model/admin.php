@@ -123,6 +123,10 @@ include_once('Database.php');
 
 
    }
+
+
+
+
    function insertEvent($data){
      
       $title=$data['title'];
@@ -142,6 +146,8 @@ include_once('Database.php');
 
 
   }
+
+
  function  deleteEvent($id){
 
    $sql = "DELETE FROM  events  WHERE id=$id";
@@ -160,7 +166,81 @@ include_once('Database.php');
 
 
 
+   function insertAnnounce($data){
+     
+      $title=$data['title'];
+      $desc=$data['content'];
    
+     $sql = "INSERT INTO announcement (announce_title, announce_content) values('$title','$desc')";
+       
+       
+     if($this->conn->query($sql)){
+
+      header("location: ".URL."/view/admin/announcement.php?info=success");
+     }
+     else{
+      echo "Error updating record: " .$this->conn->error;
+     }
+
+
+  }
+  
+  function fetchAllAnnounce(){
+   $sql="SELECT * FROM announcement";
+   $result=$this->conn->query( $sql);
+   while($row = mysqli_fetch_assoc($result)){
+     $array[] = $row;
+    }
+
+ return $array;
+
+
+  }
+  function deleteAnnounce($id){
+
+   $sql = "DELETE FROM  announcement WHERE id=$id";
+        
+        
+   if($this->conn->query($sql)){
+
+    header("location: ".URL."/view/admin/announcement.php");
+   }
+   else{
+    echo "Error updating record: " .$this->conn->error;
+   }
+
+  }
+
+   function updateAnnounce($data){
+
+      $id=$data['update_id'];
+      $title=$data['update_title'];
+      $content=$data['update_content'];
+      
+     $sql = "UPDATE  announcement SET   announce_title='$title' , announce_content='$content'  WHERE id=$id";
+       
+       
+     if($this->conn->query($sql)){
+
+      header("location: ".URL."/view/admin/announcement.php?info=success");
+     }
+     else{
+      echo "Error updating record: " .$this->conn->error;
+     }
+
+
+   }
+   function fetchSingleAnnounce($id){
+      $sql="SELECT * FROM announcement where id=$id";
+      $result=$this->conn->query( $sql);
+      while($row = mysqli_fetch_assoc($result)){
+        $array[] = $row;
+       }
+   
+    return $array;
+  
+  
+     }
 
 
 }

@@ -29,16 +29,20 @@ $member->CreateAcccount($_REQUEST);
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Develpment</title>
+    <title>ASTU-Code Club |SignUp</title>
     <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Akronim"
     />
+    
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Alef"
     />
+    <link rel = "icon" href =  "../../icon.png" 
+        type = "image/x-icon"> 
+
     <link rel="stylesheet" href="../../assets/fonts/font-awesome.min.css" />
     <link rel="stylesheet" href="../../assets/fonts/ionicons.min.css" />
     <link rel="stylesheet" href="../../assets/css/Footer-Dark.css" />

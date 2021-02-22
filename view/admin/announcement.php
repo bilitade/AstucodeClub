@@ -10,23 +10,24 @@ if ($_SESSION["adminUser"]==""||$_SESSION["adminUser"]==null ){
 require('../../Model/admin.php');
 $adminobj= new Admin();
 $events=$adminobj->fetchAllEvent();
-if(isset($_REQUEST['edit_button'])){
+$announces=$adminobj->fetchAllAnnounce();
+if(isset($_REQUEST['edit_announce'])){
 
-$singleEvent=$adminobj->fetchSingleEvent($_REQUEST['edit_id']);
+$singleAnnounce=$adminobj->fetchSingleAnnounce($_REQUEST['announce_id']);
 }
-if(isset($_REQUEST['update_event'])){
+if(isset($_REQUEST['update_announce'])){
 
 
-$adminobj->updateEvent($_REQUEST);
+$adminobj->updateAnnounce($_REQUEST);
 //print_r($_REQUEST);
 
 }
-if(isset($_REQUEST['add_event'])){
-$adminobj->insertEvent($_REQUEST);
+if(isset($_REQUEST['add_announce'])){
+$adminobj->insertAnnounce($_REQUEST);
 
 }
-if(isset($_REQUEST['delete_event'])){
-  $adminobj->deleteEvent($_REQUEST['delete_id']);
+if(isset($_REQUEST['delete_announce'])){
+  $adminobj->deleteAnnounce($_REQUEST['delete_id']);
   
   }
 
@@ -48,7 +49,7 @@ if(isset($_REQUEST['delete_event'])){
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>ASTU-Code Club |Events</title>
+    <title>ASTU-Code Club |Annoucements</title>
     <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
@@ -96,7 +97,12 @@ if(isset($_REQUEST['delete_event'])){
       </div>
     </nav>
     <div class="container-fluid" style="margin-top: 3%">
-
+    <h1
+                  class="text-center"
+                  style="font-size: 22px; padding-top: 21px"
+                >
+                  Announcements
+                </h1>
         <div class="row">
             <div class="col col-12 col-md-8" style="padding: 0px">
               <div
@@ -113,31 +119,31 @@ if(isset($_REQUEST['delete_event'])){
                     <tr>
                       <th>Id</th>
                       <th>Event Title</th>
-                      <th>Begin at</th>
-                      <th>End at</th>
+                      <th>Event Content</th>
+                      <th>Posted on</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                      <?php foreach($events as $event): ?>
+                      <?php foreach($announces as $announce): ?>
                     <tr>
-                      <td><?php echo $event['id'] ?></td>
-                      <td><?php echo $event['title'] ?></td>
-                      <td><?php echo $event['begin_at'] ?></td>
-                      <td><?php echo $event['end_at'] ?></td>
+                      <td><?php echo $announce['id'] ?></td>
+                      <td><?php echo $announce['announce_title'] ?></td>
+                      <td><?php echo $announce['announce_content'] ?></td>
+                      <td><?php echo $announce['posted'] ?></td>
                       <td>
-                      <form action="<?php echo $_SERVER["PHP_SELF"]?>" method="POST">
+                      <form action="<?php echo $_SERVER["PHP_SELF"]?>" method="GET">
                           <input
                             class="form-control"
                             type="number"
                             hidden=""
-                            name="edit_id"
-                              value="<?php echo $event['id'] ?>"
+                            name="announce_id"
+                              value="<?php echo $announce['id'] ?>"
                           /><button
                             class="btn btn-warning"
                             type="submit"
-                            name="edit_button"
+                            name="edit_announce"
                           
                           >
                             <i class="fa fa-edit"></i>Edit
@@ -145,17 +151,17 @@ if(isset($_REQUEST['delete_event'])){
                         </form>
                       </td>
                       <td>
-                        <form method="POST">
+                        <form method="GET">
                           <input
                             class="form-control"
                             type="number"
                             hidden=""
                             name="delete_id"
-                            value="<?php echo $event['id'] ?>"
+                            value="<?php echo $announce['id'] ?>"
                           /><button
                             class="btn btn-danger"
                             type="submit"
-                            name="delete_event"
+                            name="delete_announce"
                           >
                             <i class="fa fa-remove"></i>Delete
                           </button>
@@ -171,34 +177,28 @@ if(isset($_REQUEST['delete_event'])){
               <div class="card border-primary" style="margin-top: 15px">
                 <div class="card-body border rounded">
                   <h1 class="text-center" style="font-size: 1.3rem">
-                    Event add form
+                  Announcement add form
                   </h1>
                   <form  action="<?php echo $_SERVER["PHP_SELF"]?>" method="POST">
                     <div class="form-group">
-                      <label>Event Title</label
+                      <label>Announcement Title</label
                       ><input class="form-control" name="title" type="text" />
                     </div>
                     <div class="form-group">
-                      <label>Event Description</label
-                      ><textarea class="form-control" name="description"></textarea>
+                      <label>Announcement Content</label
+                      ><textarea class="form-control" name="content"></textarea>
                     </div>
-                    <div class="form-group">
-                      <label>Begin at</label
-                      ><input class="form-control"  name="begin_at"type="datetime-local" />
-                    </div>
-                    <div class="form-group">
-                      <label>End at</label
-                      ><input class="form-control" name="end_at" type="datetime-local" />
-                    </div>
-                    <button class="btn btn-primary" name="add_event" type="submit">
-                      Add Event
+                   
+                  
+                    <button class="btn btn-primary" name="add_announce" type="submit">
+                      Add Announcement
                     </button>
                   </form>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
-                <?php if(isset($singleEvent)) :?>
+                <?php if(isset($singleAnnounce)) :?>
                   <div class="card border-warning" style="margin-top: 15px; margin-bottom:5vh ">
                     <div class="card-body">
                       <h1 class="text-center" style="font-size: 1.3rem">
@@ -206,35 +206,20 @@ if(isset($_REQUEST['delete_event'])){
                       </h1>
                       <form action="<?php echo $_SERVER["PHP_SELF"]?>" method="POST">
                          
-                            <?php foreach($singleEvent as $single):?>
+                            <?php foreach($singleAnnounce as $single):?>
                         <div class="form-group">
                           <label>Event Title</label
-                          ><input class="form-control" value="<?php echo $single['title']?>" name="update_title" type="text" />
-                          <input class="form-control" name="update_event_id" hidden value="<?php echo $single['id']?>" type="number" />
+                          ><input class="form-control" value="<?php echo $single['announce_title']?>" name="update_title" type="text" />
+                          <input class="form-control" name="update_id" hidden value="<?php echo $single['id']?>" type="number" />
                         </div>
                         <div class="form-group">
                           <label>Event Description</label
-                          ><textarea  name="update_desc" class="form-control"><?php echo $single['descriptions']?></textarea>
+                          ><textarea  name="update_content" class="form-control"><?php echo $single['announce_content']?></textarea>
                         </div>
-                        <div class="form-group">
-                          <label>Begin at</label
-                          ><input name="update_begin"
-                            class="form-control"
-                            type="datetime-local"
-                          
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label>End at</label
-                          ><input
-                          name="update_end"
-                            class="form-control"
-                            type="datetime-local"
                       
-                          />
-                        </div>
-                        <button class="btn btn-success" type="submit" name="update_event">
-                          Update Event
+                       
+                        <button class="btn btn-success" type="submit" name="update_announce">
+                          Update Announcement
                         </button>
                         <?php 
                         

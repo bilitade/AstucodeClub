@@ -1,6 +1,11 @@
 <?php 
 session_start();
+
 require('../../Model/admin.php');
+if ($_SESSION["adminUser"]==""||$_SESSION["adminUser"]==null ){
+
+  header("location: ".URL."index.php?");
+}
 $adminobj= new Admin();
 $members=$adminobj->fetchAllMember();
 
@@ -15,6 +20,10 @@ if(isset($_REQUEST['reject_member']))
 }
 
 
+if (isset($_REQUEST["logout"]))
+     $adminobj->logout();
+
+
 
 
 ?>
@@ -27,7 +36,7 @@ if(isset($_REQUEST['reject_member']))
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Develpment</title>
+    <title>ASTU-Code Club |member List</title>
     <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
@@ -37,6 +46,8 @@ if(isset($_REQUEST['reject_member']))
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Alef"
     />
+    <link rel = "icon" href =  "../../icon.png" 
+        type = "image/x-icon"> 
     <link rel="stylesheet" href="../../assets/fonts/font-awesome.min.css" />
     <link rel="stylesheet" href="../../assets/fonts/ionicons.min.css" />
     <link rel="stylesheet" href="../../assets/css/Footer-Dark.css" />
@@ -66,7 +77,10 @@ if(isset($_REQUEST['reject_member']))
               <strong><?php if (isset($_SESSION['adminUser'])){echo $_SESSION['adminUser'];}?></strong>
             </li>
             <li class="nav-item">
-              <button class="btn btn-primary" type="button">Logout</button>
+            <form  method="GET">
+            <button class="btn btn-primary" name="logout"  type="submit">Logout</button>
+            </form>
+             
             </li>
           </ul>
         </div>
