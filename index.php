@@ -53,7 +53,7 @@
 
   <body>
     <nav
-      class="navbar navbar-light navbar-expand-md shadow"
+      class="navbar  navbar-light navbar-expand-md bg-light shadow"
       id="navbar"
       style="position: fixed; top: 0px; z-index: 4; width: 100%"
     >

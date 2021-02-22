@@ -8,11 +8,8 @@ if (  $_SESSION['memberUser']==""||$_SESSION['memberUser']==null ){
   
   }
   $member= new member();
-
   if (isset($_REQUEST["logout"]))
-
   $member->logout()
-
 ?>
 
 <!DOCTYPE html>

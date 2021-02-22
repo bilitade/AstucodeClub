@@ -2,7 +2,7 @@
 include_once('Database.php');
  class Admin extends Database{
 
-    private $conn;
+ private $conn;
  public function __construct()
  {
     $this->conn=$this->Connect();

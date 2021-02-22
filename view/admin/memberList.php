@@ -78,7 +78,7 @@ if (isset($_REQUEST["logout"]))
             </li>
             <li class="nav-item">
             <form  method="GET">
-            <button class="btn btn-primary" name="logout"  type="submit">Logout</button>
+            <button class="btn btn-danger" name="logout"  type="submit">Logout</button>
             </form>
              
             </li>
